@@ -1,25 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import FormCheckBox from './component/FormCheckBox';
+import FormRadio from './component/FormRadio';
+import FormTextArea from './component/FormTextArea';
+import Select from './component/Select';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class App extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = { linkStatus: [] }
+  }
+
+  updateLinkStatus = (status) => {
+    this.setState({ linkStatus: status })
+
+
+  }
+
+  render() {
+    return (
+      <Router>
+        <div>
+          <Select linkStatus={this.state.linkStatus} />
+          <Switch>
+            <Route path="/redio">
+              <FormRadio updateLinkStatus={this.updateLinkStatus} />
+            </Route>
+            <Route path="/cekboks">
+              <FormCheckBox updateLinkStatus={this.updateLinkStatus} />
+            </Route>
+            <Route path="/teksarea">
+              <FormTextArea updateLinkStatus={this.updateLinkStatus} />
+            </Route>
+          </Switch>
+        </div>
+      </Router>
+    );
+  }
 }
-
-export default App;
